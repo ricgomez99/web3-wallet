@@ -9,10 +9,10 @@ export default function LogginForm() {
   return (
     <form data-testid="login-form">
       <FormGroup>
-        <Input register={register} name="username" />
+        <Input register={register} name="email" />
       </FormGroup>
       <FormGroup>
-        <Input register={register} name="email" />
+        <Input register={register} name="password" />
       </FormGroup>
       <SubmitButton title="Login" />
     </form>
