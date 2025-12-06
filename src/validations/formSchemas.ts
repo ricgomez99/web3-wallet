@@ -3,9 +3,7 @@ import * as z from 'zod'
 const LoginSchema = z.object({
   email: z.email({
     error: (issue) =>
-      issue.input === undefined
-        ? 'Email field is required'
-        : 'Invalid email format',
+      issue.input === '' ? 'Email field is required' : 'Invalid email format',
   }),
   password: z
     .string()
