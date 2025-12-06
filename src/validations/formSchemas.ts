@@ -1,8 +1,18 @@
 import * as z from 'zod'
 
-const LogginSchema = z.object({
-  username: z.string().trim().min(5, { error: 'Username is required' }),
-  email: z.email().min(8, { error: 'Email is required' }),
+const LoginSchema = z.object({
+  email: z.email({
+    error: (issue) =>
+      issue.input === '' ? 'Email field is required' : 'Invalid email format',
+  }),
+  password: z
+    .string()
+    .trim()
+    .min(1, 'Password field is required')
+    .min(5, {
+      error: (iss) =>
+        `The password should have at least ${iss.minimum} characters`,
+    }),
 })
 
-export { LogginSchema }
+export { LoginSchema }
