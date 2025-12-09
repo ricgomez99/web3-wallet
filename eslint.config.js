@@ -19,7 +19,6 @@ export default defineConfig([
     plugins: {
       react: react,
       'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
     },
 
     // Extiende solo objetos de configuración plana
