@@ -21,19 +21,19 @@ jobs:
               uses: actions/setup-node@v6
               with:
                   node-version: 22
-                  cache: npm
+                  cache: pnpm
             - name: Install Dependencies
-              run: npm ci
+              run: pnpm ci
 
             - name: Check code lint
-              run: npm run lint
+              run: pnpm run lint
 
             - name: Clean up old test results
               run: rm -rf test-results
 
             - name: Run Tests
               id: test_output
-              run: npm test
+              run: pnpm test
 
             - name: Test Report
               uses: dorny/test-reporter@v2
