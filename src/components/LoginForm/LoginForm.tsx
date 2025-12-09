@@ -5,6 +5,7 @@ import SubmitButton from '@/components/Buttons/SubmitButton/SubmitButton'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginSchema } from '@/validations/formSchemas'
 import { login } from '@/api/auth'
+import ErrorMessage from '@/components/ErrorMessage/ErrorMessage'
 
 interface LoginFormValues {
   email: string
@@ -23,7 +24,6 @@ export default function LoginForm() {
 
   const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
     const { email, password } = data
-    console.info(email, password)
     login(email, password)
     reset()
   }
@@ -37,7 +37,7 @@ export default function LoginForm() {
           labelText="Email"
           type="email"
         />
-        {errors.email && <span role="alert">{errors.email?.message}</span>}
+        {errors.email && <ErrorMessage>{errors.email?.message}</ErrorMessage>}
       </FormGroup>
       <FormGroup>
         <Input
@@ -47,7 +47,7 @@ export default function LoginForm() {
           type="password"
         />
         {errors.password && (
-          <span role="alert">{errors.password?.message}</span>
+          <ErrorMessage>{errors.password?.message}</ErrorMessage>
         )}
       </FormGroup>
       <SubmitButton title="Login" />

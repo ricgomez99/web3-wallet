@@ -1,0 +1,40 @@
+name: Integration and tests
+run-name: Integration with ${{github.ref_name || github.base_ref}} by @${{github.actor}}
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+jobs:
+    integration:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Code Checkout
+              uses: actions/checkout@v6
+              with:
+                  sparse-checkout: |
+                      .github
+                      src
+            - name: Set up Node
+              uses: actions/setup-node@v6
+              with:
+                  node-version: 22
+            - name: Install Dependencies
+              run: npm install
+
+            - name: Clean up old test results
+              run: rm -rf test-results
+
+            - name: Run Tests
+              id: test_output
+              run: npm test
+
+            - name: Test Report
+              uses: dorny/test-reporter@v2
+              if: ${{ !cancelled() }}
+              with:
+                  name: VITEST Tests
+                  path: reports/test-results.xml
+                  reporter: vitest-junit

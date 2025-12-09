@@ -10,8 +10,8 @@ const LoginSchema = z.object({
     .trim()
     .min(1, 'Password field is required')
     .min(5, {
-      error: (iss) =>
-        `The password should have at least ${iss.minimum} characters`,
+      error: (issue) =>
+        `The password should have at least ${issue.minimum} characters`,
     }),
 })
 

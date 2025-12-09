@@ -10,5 +10,9 @@ export default defineConfig({
     alias: {
       '@': resolve(__dirname, 'src'),
     },
+    reporters: ['junit', 'default'],
+    outputFile: {
+      junit: 'reports/test-results.xml',
+    },
   },
 })
