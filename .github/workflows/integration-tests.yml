@@ -21,8 +21,12 @@ jobs:
               uses: actions/setup-node@v6
               with:
                   node-version: 22
+                  cache: npm
             - name: Install Dependencies
-              run: npm install
+              run: npm ci
+
+            - name: Check code lint
+              run: npm run eslint
 
             - name: Clean up old test results
               run: rm -rf test-results
@@ -37,4 +41,4 @@ jobs:
               with:
                   name: VITEST Tests
                   path: reports/test-results.xml
-                  reporter: vitest-junit
+                  reporter: jest-junit
