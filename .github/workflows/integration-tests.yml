@@ -26,7 +26,7 @@ jobs:
               run: npm ci
 
             - name: Check code lint
-              run: npm run eslint
+              run: npm run lint
 
             - name: Clean up old test results
               run: rm -rf test-results
@@ -40,5 +40,5 @@ jobs:
               if: ${{ !cancelled() }}
               with:
                   name: VITEST Tests
-                  path: reports/test-results.xml
+                  path: ${{ github.workspace }}/reports/test-results.xml
                   reporter: jest-junit
