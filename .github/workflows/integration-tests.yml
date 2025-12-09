@@ -1,0 +1,40 @@
+name: Integration and tests
+run-name: Integration with ${{github.ref_name || github.base_ref}} by @${{github.actor}}
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+jobs:
+    integration:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Code Checkout
+              uses: actions/checkout@v6
+              with:
+                  sparse-checkout: |
+                      .github
+                      src
+            - name: Set up pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 10
+                  cache: true
+            - name: Install Dependencies
+              run: pnpm install
+            - name: Check code lint
+              run: pnpm run lint
+            - name: Clean up old test results
+              run: rm -rf test-results
+            - name: Run Tests
+              id: test_output
+              run: pnpm test
+            - name: Test Report
+              uses: dorny/test-reporter@v2
+              if: ${{ !cancelled() }}
+              with:
+                  name: VITEST Tests
+                  path: ${{ github.workspace }}/reports/test-results.xml
+                  reporter: jest-junit
